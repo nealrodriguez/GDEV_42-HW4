@@ -13,10 +13,7 @@ using namespace std;
 
 struct Tile {
     int x, y, width, height;
-};
-
-struct Solid_Tile{
-    int x, y, width, height; 
+    bool is_colliding;
 };
 
 const int WINDOW_WIDTH(1280);
@@ -33,8 +30,6 @@ void MoveCamera(Camera2D* cam, Player* player, float delta_time) {
     float cam_push_y = 0.0f;
     float drift_x = 0.0f;
     float drift_y = 0.0f;
-    //float drift_x = Clamp(player->position.x - (camera_window.x + camera_window.x + camera_window.width) / 2, -cam_drift, cam_drift);
-    //float drift_y = Clamp(player->position.y - (camera_window.y + camera_window.y + camera_window.height) / 2, -cam_drift, cam_drift);
 
     if (player->position.x > camera_window.x + camera_window.width) {
         cam_push_x = player->position.x - (camera_window.x + camera_window.width);
@@ -96,6 +91,7 @@ int main() {
     for (int i = 0; i < TILE_COUNT; ++i) {
         Tile tile;
         file >> tile.x >> tile.y >> tile.width >> tile.height;
+        file >> tile.is_colliding;
         tiles.push_back(tile);
     }
     file >> GRID_WIDTH >> GRID_HEIGHT;
